@@ -1,0 +1,47 @@
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #833AB4;
+  background: linear-gradient(135deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+}
+
+.center-box {
+  height: 85vh;       
+  width: 85vw; 
+  background: #808080;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  min-width: 300px;
+}
+
+.taskbar {
+  display: flex;
+  justify-content: inline-block;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.taskbar select {
+  flex: 0.5;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #f0f0f0;
+}
+
+.taskbar button {
+  flex: 1;
+  background: #007fe8;
+  color: white;
+  border: none;
+  padding: 10px 10px;
+  text-align: center;
+  display: inline-block;
+  font-size: 30px;
+  margin: 4px 15px;
+  cursor: pointer;
+}
