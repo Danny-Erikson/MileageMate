@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './AddNewCar.css';
 
 function AddNewCar() {
   const [ownerName, setOwnerName] = useState('');
@@ -11,15 +12,12 @@ function AddNewCar() {
   const [trim, setTrim] = useState('');
   const [image, setImage] = useState(null);
 
-  // angie vin: 3n1cn7ap7h831452
-  // danny vin: 1hgcm82633a004352
   const nhtsaReachOut = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValuesExtended/${VIN}?format=json`);
       const data = await response.json();
       const result = data.Results[0];
-      console.log(result);
       setYear(result.ModelYear || '');
       setMake(result.Make ? result.Make.charAt(0).toUpperCase() + result.Make.slice(1).toLowerCase() : '');
       setModel(result.Model || '');
@@ -33,29 +31,75 @@ function AddNewCar() {
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Add New Car</h1>
-
-      <form onSubmit={nhtsaReachOut} style={{ textAlign: 'center', marginTop: '20px' }}>
+      <form className="add-new-car-form">
+        <div className='form-row'>
+        <label>VIN Number: </label>
         <input
           type="text"
-          placeholder="Enter VIN"
+          placeholder="Vin Number"
           value={VIN}
-          onChange={(e) => setVIN(e.target.value)}
-          style={{ fontSize: '18px', padding: '10px', width: '300px' }}
-        />
-        <button type="submit" style={{ marginLeft: '10px', padding: '10px 20px', fontSize: '18px' }}>
-          Test VIN
-        </button>
-      </form>
-
-      {year || make || model || trim ? (
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <h3>Fetched Data:</h3>
-          <p><strong>Year:</strong> {year}</p>
-          <p><strong>Make:</strong> {make}</p>
-          <p><strong>Model:</strong> {model}</p>
-          <p><strong>Trim:</strong> {trim}</p>
+          onChange={(e) => setVIN(e.target.value)}/>
         </div>
-      ) : null}
+        <div className='form-row'>
+        <label>License Plate Number: </label>
+        <input
+          type="text"
+          placeholder="License Plate"
+          value={licensePlate}
+          onChange={(e) => setLicensePlate(e.target.value)}/>
+        </div>
+        <div className='form-row'>
+        <label>Year: </label>
+        <input
+          type="text"
+          placeholder="Model Year"
+          value={year}
+          onChange={(e) => setYear(e.target.value)}/>
+        </div>
+        <div className='form-row'>
+        <label>Make: </label>
+        <input
+          type="text"
+          placeholder="Make (Brand)"
+          value={make}
+          onChange={(e) => setMake(e.target.value)}/>
+        </div>
+        <div className='form-row'>
+        <label>Model: </label>
+        <input
+          type="text"
+          placeholder="Model"
+          value={model}
+          onChange={(e) => setModel(e.target.value)}/>
+        </div>
+        <div className='form-row'>
+        <label>Trim: </label>
+        <input
+          type="text"
+          placeholder="Tirm"
+          value={trim}
+          onChange={(e) => setTrim(e.target.value)}/>
+        </div>
+        <button onClick={nhtsaReachOut} className="fetch-button">Get Year, Make, Model, Tirm Data Via VIN</button>
+        <div className='form-row'>
+          <label>Owner Name: </label>
+          <select value={ownerName} onChange={(e) => setOwnerName(e.target.value)}>
+            <option value="">Select Owner</option>
+            <option value="danny">Danny Erikson</option>
+            <option value="angie">Angie Juares</option>
+            <option value="mom">Mom</option>
+          </select>
+        </div>
+        <div className='form-row'>
+          <label>Mechanic Name: </label>
+          <select value={mechanicName} onChange={(e) => setMechanicName(e.target.value)}>
+            <option value="">Select Mechanic</option>
+            <option value="danny">Danny Erikson</option>
+            <option value="angie">Nyl Par</option>
+            <option value="mom">Jose Juares</option>
+          </select>
+        </div>
+      </form>
     </div>
   );
 }

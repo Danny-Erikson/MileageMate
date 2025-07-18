@@ -1,0 +1,37 @@
+.add-new-car-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+}
+
+.form-row label {
+  font-weight: 500;
+  font-size: 20px;
+  padding: 5px;
+  margin-right: 2px;
+}
+
+.form-row input {
+  flex: 1;
+  padding: 5px;
+  max-width: 20%;
+  box-sizing: border-box;
+}
+
+.fetch-button {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: 400;
+  font-size: 16px;
+  padding: 10px 15px;
+  max-width: 25%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
