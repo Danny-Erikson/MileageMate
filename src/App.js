@@ -3,15 +3,18 @@ import { useState } from 'react';
 import CarView from './components/CarView';
 import Mileage from './components/Mileage';
 import Service from './components/Service';
+import AddNewCar from './components/AddNewCar';
 
 function App() {
   const [activeComponent, setActiveComponent] = useState('carView');
   const [selectedCar, setSelectedCar] = useState('car1');
 
   let content;
-  if (activeComponent === 'carView') content = <CarView selectedCar={selectedCar}/>;
+  if (selectedCar === 'addNew') content = <AddNewCar selectedCar={selectedCar} />;
+  else if (activeComponent === 'carView') content = <CarView selectedCar={selectedCar} />;
   else if (activeComponent === 'mileage') content = <Mileage selectedCar={selectedCar} />;
-  else if (activeComponent === 'service') content = <Service selectedCar={selectedCar}/>;
+  else if (activeComponent === 'service') content = <Service selectedCar={selectedCar} />;
+
 
   return (
     <div className="app">
@@ -23,9 +26,9 @@ function App() {
             <option value="car3">Car 3</option>
             <option value="addNew">Add New</option>
           </select>
-          <button onClick={() => setActiveComponent('carView')}>Car View</button>
-          <button onClick={() => setActiveComponent('mileage')}>Mileage</button>
-          <button onClick={() => setActiveComponent('service')}>Service</button>
+          <button onClick={() => setActiveComponent('carView')} className={selectedCar === 'addNew' ? 'disabled-button' : 'taskbar-button'}>Car View</button>
+          <button onClick={() => setActiveComponent('mileage')} className={selectedCar === 'addNew' ? 'disabled-button' : 'taskbar-button'}>Mileage</button>
+          <button onClick={() => setActiveComponent('service')} className={selectedCar === 'addNew' ? 'disabled-button' : 'taskbar-button'}>Service</button>
         </div>
         {content}
       </div>
