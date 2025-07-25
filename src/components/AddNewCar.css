@@ -1,9 +1,9 @@
 .add-new-car-form {
   display: flex;
   flex-direction: column;
+  height: 100%;
   gap: 10px;
 }
-
 .form-row {
   display: flex;
   align-items: center;
@@ -26,6 +26,7 @@
 .fetch-button {
   background-color: #4CAF50;
   color: white;
+  transition: background-color 0.8s, color 0.8s, transform 0.8s;
   font-weight: 400;
   font-size: 16px;
   padding: 10px 15px;
@@ -35,3 +36,10 @@
   cursor: pointer;
 }
 
+.fetch-button:hover {
+  transform: scale(1.09);
+}
+
+.bottom-row {
+  margin-top: auto;
+}

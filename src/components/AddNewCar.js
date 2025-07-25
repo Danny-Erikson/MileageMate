@@ -3,7 +3,6 @@ import './AddNewCar.css';
 
 function AddNewCar() {
   const [ownerName, setOwnerName] = useState('');
-  const [mechanicName, setMechanicName] = useState('');
   const [VIN, setVIN] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
   const [year, setYear] = useState('');
@@ -41,7 +40,7 @@ function AddNewCar() {
           onChange={(e) => setVIN(e.target.value)}/>
         </div>
         <div className='form-row'>
-        <label>License Plate Number: </label>
+        <label>License Plate: </label>
         <input
           type="text"
           placeholder="License Plate"
@@ -91,13 +90,27 @@ function AddNewCar() {
           </select>
         </div>
         <div className='form-row'>
-          <label>Mechanic Name: </label>
-          <select value={mechanicName} onChange={(e) => setMechanicName(e.target.value)}>
-            <option value="">Select Mechanic</option>
-            <option value="danny">Danny Erikson</option>
-            <option value="angie">Nyl Par</option>
-            <option value="mom">Jose Juares</option>
-          </select>
+          <label>Upload Image:</label>
+            <input
+              type="file"
+              id="carImage"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+        </div>
+        <div className='form-row'>
+          {image && (
+              <div style={{ marginTop: '10px' }}>
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="Car Preview"
+                  style={{ width: '200px', borderRadius: '10px' }}
+                />
+              </div>
+            )}
+        </div>
+        <div className='bottom-row'> 
+          <button className="submit-button">Submit</button> {/* FIXME: this is still broken */}
         </div>
       </form>
     </div>
