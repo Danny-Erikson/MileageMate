@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import './LoginModal.css';
+import React, { useState } from 'react';
 
 function LoginModal({ isOpen, onLogin, error: loginError }) {
   const [username, setUsername] = useState('');

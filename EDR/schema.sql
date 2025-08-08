@@ -8,6 +8,7 @@ USE mileage_mate;
 CREATE TABLE Users (
     userID INT NOT NULL AUTO_INCREMENT,
     groupID INT NOT NULL,
+    displayName VARCHAR(30) NOT NULL,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(30) NOT NULL,
     PRIMARY KEY (userID)
