@@ -1,0 +1,15 @@
+.car-view-header {
+  border-radius: 8px;
+}
+
+.car-view-header span{
+  font-weight: normal;
+  font-size: 26px;
+}
+
+.car-view-details {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  gap: 20px;
+}

@@ -1,10 +1,12 @@
-import { useState, useEffect} from 'react';
 import './app.css';
+import { useState, useEffect} from 'react';
 import LoginModal from './components/LoginModal';
 import CarView from './components/CarView';
 import Mileage from './components/Mileage';
 import Service from './components/Service';
 import AddNewCar from './components/AddNewCar';
+
+//TODO: add car data to car view
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
@@ -68,8 +70,8 @@ function App() {
   };
 
   let content;
-  if (selectedCar === 'addNew') content = <AddNewCar selectedCar={selectedCar} />;
-  else if (activeComponent === 'carView') content = <CarView selectedCar={selectedCar} />;
+  if (selectedCar === 'addNew') content = <AddNewCar />;
+  else if (activeComponent === 'carView') content = <CarView selectedCar={selectedCar} carData={carData}/>
   else if (activeComponent === 'mileage') content = <Mileage selectedCar={selectedCar} />;
   else if (activeComponent === 'service') content = <Service selectedCar={selectedCar} />;
 
@@ -93,6 +95,7 @@ function App() {
           <button onClick={() => setActiveComponent('carView')} className={selectedCar === 'addNew' ? 'disabled-button' : 'taskbar-button'}>Car View</button>
           <button onClick={() => setActiveComponent('mileage')} className={selectedCar === 'addNew' ? 'disabled-button' : 'taskbar-button'}>Mileage</button>
           <button onClick={() => setActiveComponent('service')} className={selectedCar === 'addNew' ? 'disabled-button' : 'taskbar-button'}>Service</button>
+          <button onClick={() => setShowLogin(true)} className='taskbar-button logout-button'>Logout</button>
         </div>
           {content}
       </div>
