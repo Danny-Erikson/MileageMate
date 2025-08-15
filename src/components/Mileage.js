@@ -2,41 +2,51 @@ import './Mileage.css';
 import './table.css';
 import { useState, useEffect } from "react";
 
-function Mileage(selectedCar) {
-  const [mileages, setMileages] = useState([]);
-  const [mileageDiffs, setMileageDiffs] = useState([]);
+//TODO: Set up calculateMonthlyAverages
+//TODO: Set up a table builder function to avoid code duplication
+//TODO: Use new table function to build the two tables
+//TODO: Because modern web design is all about making things harder than they need to be, make two table one and be able to select which one to show
+
+function Mileage({ selectedCar }) {
+  const [monthlyAverages, setMonthlyAverages] = useState({});
+  const [rawAverages, setRawAverages] = useState([]);
 
   useEffect(() => {
-    // Fetch your mileage data from backend
-    fetch(`http://127.0.0.1:3031/mileage?carID=${selectedCar.selectedCar}`)
+
+    fetch(`http://127.0.0.1:3031/mileage?carID=${selectedCar}`)
       .then(res => res.json())
       .then(data => {
-        setMileages(data);
-
-        // Build the "temporary JSON doc" of differences
-        const diffs = data.slice(1).map((entry, i) => {
-        const mileageDiff = entry.odometerReading - data[i].odometerReading;
-        const daysDiff = (new Date(entry.readingDate) - new Date(data[i].readingDate)) / 86400000; // ms to days
-        return {
-          diff: mileageDiff,
-          date: entry.readingDate,
-          dayDiff: daysDiff,
-          average: Number((mileageDiff / daysDiff).toFixed(2))
-        };
-      });
-
-        setMileageDiffs(diffs);
-      });
+        setRawAverages(calculateRawAverages(data));
+        setMonthlyAverages(calculateMonthlyAverages(data));
+      })
+      .catch(err => console.error("Fetch error:", err));
   }, [selectedCar]);
 
+  function calculateRawAverages(data) {
+    return data.slice(1).map((entry, i) => {
+      const mileageDiff = entry.odometerReading - data[i].odometerReading;
+      const daysDiff = (new Date(entry.readingDate) - new Date(data[i].readingDate)) / 86400000;
+      return {
+        diff: mileageDiff,
+        date: entry.readingDate,
+        dayDiff: daysDiff,
+        average: Number((mileageDiff / daysDiff).toFixed(2))
+      };
+    });
+  }
+
   function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric"
     });
   }
+
+  // Calculate overall average miles per day
+  const overallAverage = rawAverages.length
+    ? (rawAverages.reduce((acc, curr) => acc + curr.average, 0) / rawAverages.length).toFixed(2)
+    : "N/A";
 
   return (
     <div>
@@ -45,11 +55,11 @@ function Mileage(selectedCar) {
           <tr>
             <th>Reading Date</th>
             <th>Mileage Difference</th>
-            <th>Avgerge Miles per Day</th>
+            <th>Average Miles per Day</th>
           </tr>
         </thead>
         <tbody>
-          {[...mileageDiffs]
+          {[...rawAverages]
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((mileage, index) => (
               <tr key={index}>
@@ -59,8 +69,8 @@ function Mileage(selectedCar) {
               </tr>
             ))}
           <tr>
-            <td colSpan="2" style={{ textAlign: 'right' }}>{`Avgerge miles per day`}</td>
-            <td>{(mileageDiffs.reduce((acc, curr) => acc + curr.average, 0) / mileageDiffs.length).toFixed(2)}</td>
+            <td colSpan="2" style={{ textAlign: 'right' }}>Average miles per day</td>
+            <td>{overallAverage}</td>
           </tr>
         </tbody>
       </table>
